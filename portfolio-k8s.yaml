@@ -1,0 +1,81 @@
+# 1. Portfolio uchun ichki tarmoq xizmati (Service)
+apiVersion: v1
+kind: Service
+metadata:
+  name: portfolio
+spec:
+  selector:
+    app: portfolio-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+# 2. Portfolio Nginx konteyneri (Deployment)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portfolio-web
+  template:
+    metadata:
+      labels:
+        app: portfolio-web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: website-files
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: website-files
+        hostPath:
+          path: /home/satosylv/projects/websites
+          type: Directory
+
+---
+# 3. Cloudflare Tunnel konteyneri (Deployment)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared-tunnel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cf-tunnel
+  template:
+    metadata:
+      labels:
+        app: cf-tunnel
+    spec:
+      containers:
+      - name: cloudflared
+        image: cloudflare/cloudflared:latest
+        command:
+        - "cloudflared"
+        - "tunnel"
+        - "--no-autoupdate"
+        - "run"
+        - "--credentials-file"
+        - "/home/nonroot/.cloudflared/3fd213f9-e4f0-45ab-8360-4df844f9bda6.json"
+        - "--url"
+        - "http://100.83.225.29:80"
+        - "markaz-tunnel"
+        volumeMounts:
+        - name: cf-credentials
+          mountPath: /home/nonroot/.cloudflared
+      volumes:
+      - name: cf-credentials
+        hostPath:
+          path: /home/satosylv/.cloudflared
+          type: Directory
+

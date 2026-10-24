@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karimov Abdullatif — Backend & DevOps Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109331277', 'ym');
+
+    ym(109331277, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109331277" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<style>
+  :root {
+    --bg: #0a0e0f;
+    --bg2: #0f1518;
+    --bg3: #141c1f;
+    --green: #00e5a0;
+    --green-dim: #00b37d;
+    --green-glow: rgba(0, 229, 160, 0.12);
+    --cyan: #00d4e5;
+    --amber: #f5a623;
+    --text: #e8f0ee;
+    --text-dim: #7a9490;
+    --text-muted: #3d5450;
+    --border: rgba(0, 229, 160, 0.15);
+    --border-dim: rgba(0, 229, 160, 0.07);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--green);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,229,160,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Grid background */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(10, 14, 15, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-dim);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-logo span { color: var(--text-dim); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--green); }
+
+  .nav-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 3rem 4rem;
+    z-index: 1;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: var(--sans);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-name .first { color: var(--text); }
+  .hero-name .last { color: var(--green); }
+
+  .hero-role {
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: var(--text-dim);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-role .accent { color: var(--cyan); }
+
+  .terminal-block {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    max-width: 580px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .terminal-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--cyan), transparent);
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 1rem;
+  }
+
+  .terminal-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .terminal-dot:nth-child(1) { background: #ff5f56; }
+  .terminal-dot:nth-child(2) { background: #ffbd2e; }
+  .terminal-dot:nth-child(3) { background: #27c93f; }
+
+  .terminal-bar span {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .terminal-line {
+    font-size: 12px;
+    line-height: 2;
+    color: var(--text-dim);
+  }
+
+  .terminal-line .prompt { color: var(--green); }
+  .terminal-line .cmd { color: var(--text); }
+  .terminal-line .output { color: var(--text-dim); }
+  .terminal-line .success { color: var(--green); }
+  .terminal-line .highlight { color: var(--amber); }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--green);
+    vertical-align: middle;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 0.75rem 2rem;
+    background: var(--green);
+    color: #0a0e0f;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: none;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+
+  .btn-primary:hover {
+    background: var(--cyan);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    padding: 0.75rem 2rem;
+    background: transparent;
+    color: var(--green);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--green);
+    cursor: none;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: var(--green-glow);
+    transform: translateY(-2px);
+  }
+
+  .hero-right {
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeIn 1s 1.2s forwards;
+  }
+
+  .stat-pill {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1.25rem;
+    border-radius: 4px;
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: var(--sans);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: var(--sans);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 3rem;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+    margin-bottom: 4rem;
+  }
+
+  /* SKILLS SECTION */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    padding: 1.75rem;
+    border-radius: 4px;
+    transition: border-color 0.3s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-category::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--green);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .skill-category:hover::after { transform: scaleX(1); }
+  .skill-category:hover { border-color: var(--border); background: var(--bg3); }
+
+  .skill-cat-icon {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .skill-cat-icon::before {
+    content: '▸';
+    color: var(--green-dim);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-tag {
+    padding: 4px 12px;
+    font-size: 11px;
+    background: var(--bg);
+    border: 1px solid var(--border-dim);
+    color: var(--text-dim);
+    border-radius: 2px;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .skill-tag:hover {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--green-glow);
+  }
+
+  .skill-tag.highlight {
+    border-color: rgba(0,212,229,0.3);
+    color: var(--cyan);
+  }
+
+  /* EXPERIENCE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--green), var(--green-dim) 60%, transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.6s forwards;
+    animation-play-state: paused;
+  }
+
+  .timeline-item.visible { animation-play-state: running; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.4rem;
+    top: 6px;
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--green);
+  }
+
+  .timeline-date {
+    font-size: 10px;
+    color: var(--green-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-title {
+    font-family: var(--sans);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    max-width: 600px;
+  }
+
+  /* SERVER SECTION */
+  .server-showcase {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .server-header {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border-dim);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .server-status-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .server-body {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .server-metric {
+    background: var(--bg);
+    border: 1px solid var(--border-dim);
+    padding: 1.25rem;
+    border-radius: 4px;
+  }
+
+  .server-metric-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .server-metric-val {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--green);
+    font-family: var(--mono);
+  }
+
+  .server-metric-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--bg3);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 2px;
+    animation: fillBar 2s ease forwards;
+  }
+
+  @keyframes fillBar {
+    from { width: 0; }
+  }
+
+  .server-log {
+    border-top: 1px solid var(--border-dim);
+    padding: 1.25rem 1.5rem;
+    font-size: 11px;
+    line-height: 2;
+    color: var(--text-dim);
+    max-height: 180px;
+    overflow-y: auto;
+  }
+
+  .log-time { color: var(--text-muted); }
+  .log-ok { color: var(--green); }
+  .log-info { color: var(--cyan); }
+  .log-warn { color: var(--amber); }
+
+  /* CERTIFICATE */
+  .cert-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .cert-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at top left, rgba(0,229,160,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cert-card:hover { border-color: var(--green); }
+
+  .cert-icon {
+    width: 56px; height: 56px;
+    background: var(--green-glow);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+  }
+
+  .cert-title {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .cert-org {
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .cert-courses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .cert-course-tag {
+    font-size: 10px;
+    padding: 3px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border-dim);
+    color: var(--text-dim);
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .cert-date {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+  }
+
+  .cert-verify {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 10px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid rgba(0,229,160,0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .cert-verify:hover { border-color: var(--green); }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .contact-card {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    padding: 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--green-glow);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .contact-card:hover { border-color: var(--green); }
+  .contact-card:hover::before { opacity: 1; }
+
+  .contact-card-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-card-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .contact-card-arrow {
+    position: absolute;
+    top: 1.25rem; right: 1.25rem;
+    color: var(--green);
+    font-size: 1rem;
+    opacity: 0;
+    transition: all 0.25s;
+  }
+
+  .contact-card:hover .contact-card-arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
+  /* DEVOPS ROADMAP */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .roadmap-item {
+    background: var(--bg2);
+    border: 1px solid var(--border-dim);
+    padding: 1.5rem;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .roadmap-status {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .roadmap-status.done { color: var(--green); }
+  .roadmap-status.active { color: var(--amber); }
+  .roadmap-status.next { color: var(--text-muted); }
+
+  .roadmap-title {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .roadmap-tech {
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border-dim);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  footer span { color: var(--green); }
+
+  /* Floating label */
+  .float-label {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    z-index: 200;
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--green), transparent);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { padding: 5rem 1.5rem 3rem; }
+    .hero-right { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero-name { font-size: 2.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .float-label { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Float label -->
+<div class="float-label">abdullatif.karimov · 2025</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span>~/</span>abdullatif
+  </div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#server">Server</a></li>
+    <li><a href="#certs">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="status-dot"></div>
+    Available for work
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="max-width:100%">
+  <div class="hero-inner">
+    <p class="hero-label">// backend developer → devops engineer</p>
+    <h1 class="hero-name">
+      <span class="first">KARIMOV</span><br>
+      <span class="last">ABDULLATIF</span>
+    </h1>
+    <p class="hero-role">
+      Backend Dev at TUIT · <span class="accent">Building infrastructure from 0 → production</span>
+    </p>
+
+    <div class="terminal-block">
+      <div class="terminal-bar">
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+        <span>abdullatif@server:~</span>
+      </div>
+      <div class="terminal-line"><span class="prompt">$ </span><span class="cmd">whoami</span></div>
+      <div class="terminal-line"><span class="output">→ Backend Developer | DevOps Learner | Python & Docker enthusiast</span></div>
+      <div class="terminal-line"><span class="prompt">$ </span><span class="cmd">cat journey.txt</span></div>
+      <div class="terminal-line"><span class="output">→ Pascal (2017) → C++ (2019) → Python (2021) → DRF + Docker (2023) → DevOps (2024)</span></div>
+      <div class="terminal-line"><span class="prompt">$ </span><span class="cmd">systemctl status server</span></div>
+      <div class="terminal-line"><span class="success">● server.service — Active: running since today — <span class="highlight">Self-hosted ✓</span></span></div>
+      <div class="terminal-line"><span class="prompt">$ </span><span class="cursor-blink"></span></div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Contact Me</a>
+      <a href="https://github.com/KarimovProject" target="_blank" class="btn-secondary">GitHub ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-pill">
+      <div class="stat-num">2017</div>
+      <div class="stat-label">Coding since</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Languages</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-num">0→∞</div>
+      <div class="stat-label">Server setup</div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    scroll
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// 02 — capabilities</div>
+  <h2 class="section-title">Tech Stack</h2>
+  <div class="section-divider"></div>
+
+  <div class="skills-grid">
+    <div class="skill-category">
+      <div class="skill-cat-icon">Backend</div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Python</span>
+        <span class="skill-tag highlight">DRF</span>
+        <span class="skill-tag">C/C++</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">SQLite</span>
+        <span class="skill-tag">REST API</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="skill-cat-icon">DevOps & Infra</div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Docker</span>
+        <span class="skill-tag highlight">Linux/Unix</span>
+        <span class="skill-tag highlight">Bash</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">GitLab</span>
+        <span class="skill-tag">ARM</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="skill-cat-icon">Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Postman</span>
+        <span class="skill-tag">PyCharm</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">MS Office</span>
+        <span class="skill-tag">Tesseract</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="skill-cat-icon">Other</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Computer Vision</span>
+        <span class="skill-tag">Pillow</span>
+        <span class="skill-tag">OpenCV</span>
+        <span class="skill-tag">English</span>
+        <span class="skill-tag">Russian</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">// 03 — timeline</div>
+  <h2 class="section-title">Journey</h2>
+  <div class="section-divider"></div>
+
+  <div class="timeline">
+    <div class="timeline-item visible" style="animation-delay:0s">
+      <div class="timeline-date">2023 — 2025</div>
+      <div class="timeline-title">Backend Developer</div>
+      <div class="timeline-subtitle">SAMARKAND · DEEP FOCUS</div>
+      <p class="timeline-desc">Entered backend development with full dedication. Built APIs with Django REST Framework, worked with Docker containers, and collaborated with a team of like-minded developers pushing each other to grow fast.</p>
+    </div>
+
+    <div class="timeline-item visible" style="animation-delay:0.15s">
+      <div class="timeline-date">2024 — 2025</div>
+      <div class="timeline-title">School 21 — DevOps Track</div>
+      <div class="timeline-subtitle">INTENSIVE PHASE · TEAM PROJECTS</div>
+      <p class="timeline-desc">Joined School 21 to master DevOps practices — learning infrastructure automation, CI/CD pipelines, containerization, and team-based project deployment. From intensive bootcamp to applied training.</p>
+    </div>
+
+    <div class="timeline-item visible" style="animation-delay:0.3s">
+      <div class="timeline-date">2021 — 2025</div>
+      <div class="timeline-title">Bachelor of Computer Engineering</div>
+      <div class="timeline-subtitle">TUIT — TASHKENT UNIVERSITY OF INFORMATION TECHNOLOGIES</div>
+      <p class="timeline-desc">Deep academic foundation in computer engineering. Mastered C++, Python, SQL, and computer science fundamentals. Combined theory with hands-on project work.</p>
+    </div>
+
+    <div class="timeline-item visible" style="animation-delay:0.45s">
+      <div class="timeline-date">2019 — 2021</div>
+      <div class="timeline-title">Information Technology Lyceum</div>
+      <div class="timeline-subtitle">LYCEUM OF EXACT SCIENCES</div>
+      <p class="timeline-desc">Intensive study of C++ and Python programming. Solved competitive programming problems on Codewars and specialized problem sets. Built strong algorithmic thinking.</p>
+    </div>
+
+    <div class="timeline-item visible" style="animation-delay:0.6s">
+      <div class="timeline-date">2017 — 2019</div>
+      <div class="timeline-title">First Lines of Code</div>
+      <div class="timeline-subtitle">SCHOOL · BULUNGUR DISTRICT</div>
+      <p class="timeline-desc">Discovered programming through Pascal at school. The spark that started it all — understanding how computers think and how software is built.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVER SECTION -->
+<section id="server">
+  <div class="section-label">// 04 — infrastructure</div>
+  <h2 class="section-title">My Server</h2>
+  <div class="section-divider"></div>
+
+  <p style="font-size:12px; color:var(--text-dim); margin-bottom:2rem; line-height:2; max-width:600px">
+    Built and configured a personal server from scratch — from 0 to production-ready.<br>
+    Full control over the stack: OS, networking, Docker, deployments.
+  </p>
+
+  <div class="server-showcase">
+    <div class="server-header">
+      <div class="server-status-row">
+        <div class="status-dot"></div>
+        abdullatif-server · Ubuntu 24 LTS
+      </div>
+      <span>uptime: 99.9%</span>
+    </div>
+
+    <div class="server-body">
+      <div class="server-metric">
+        <div class="server-metric-label">OS</div>
+        <div class="server-metric-val" style="font-size:1rem">Ubuntu 24.04</div>
+        <div class="server-metric-sub">LTS · Self-configured</div>
+      </div>
+      <div class="server-metric">
+        <div class="server-metric-label">Containers</div>
+        <div class="server-metric-val">Docker</div>
+        <div class="server-metric-sub">Multi-container apps</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+      </div>
+      <div class="server-metric">
+        <div class="server-metric-label">CI/CD</div>
+        <div class="server-metric-val">GitLab</div>
+        <div class="server-metric-sub">Auto deploy pipelines</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+      </div>
+      <div class="server-metric">
+        <div class="server-metric-label">Setup Level</div>
+        <div class="server-metric-val">0 → Pro</div>
+        <div class="server-metric-sub">Full stack infra</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div>
+      </div>
+    </div>
+
+    <div class="server-log" id="serverLog">
+      <div><span class="log-time">[2025-05-14 00:01:02]</span> <span class="log-ok">OK</span> — Docker daemon started successfully</div>
+      <div><span class="log-time">[2025-05-14 00:01:05]</span> <span class="log-ok">OK</span> — Nginx reverse proxy active on :80 and :443</div>
+      <div><span class="log-time">[2025-05-14 00:01:08]</span> <span class="log-info">INFO</span> — GitLab runner registered and listening</div>
+      <div><span class="log-time">[2025-05-14 00:01:11]</span> <span class="log-ok">OK</span> — PostgreSQL database service running</div>
+      <div><span class="log-time">[2025-05-14 00:01:14]</span> <span class="log-info">INFO</span> — SSL certificates valid · expires 2026-02-01</div>
+      <div><span class="log-time">[2025-05-14 00:01:17]</span> <span class="log-ok">OK</span> — DRF API responding on /api/v1/</div>
+      <div><span class="log-time">[2025-05-14 00:01:20]</span> <span class="log-warn">DEPLOY</span> — New container image pulled · restarting service</div>
+      <div><span class="log-time">[2025-05-14 00:01:23]</span> <span class="log-ok">OK</span> — Deployment complete · zero downtime achieved</div>
+      <div><span class="log-time">[2025-05-14 00:01:26]</span> <span class="log-info">INFO</span> — Monitoring stack: health check passed ✓</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEVOPS ROADMAP -->
+<section id="roadmap">
+  <div class="section-label">// 05 — path forward</div>
+  <h2 class="section-title">DevOps Roadmap</h2>
+  <div class="section-divider"></div>
+
+  <div class="roadmap">
+    <div class="roadmap-item">
+      <div class="roadmap-status done">● Completed</div>
+      <div class="roadmap-title">Linux & Bash</div>
+      <div class="roadmap-tech">Ubuntu · Shell scripting · File systems · Process management</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-status done">● Completed</div>
+      <div class="roadmap-title">Containers</div>
+      <div class="roadmap-tech">Docker · Docker Compose · Container networking · Volumes</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-status done">● Completed</div>
+      <div class="roadmap-title">Version Control</div>
+      <div class="roadmap-tech">Git · GitHub · GitLab · Branching strategies · CI pipelines</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-status active">◈ In Progress</div>
+      <div class="roadmap-title">CI/CD Pipelines</div>
+      <div class="roadmap-tech">GitLab CI · Auto deploy · Pipeline stages · Testing automation</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-status active">◈ In Progress</div>
+      <div class="roadmap-title">Monitoring</div>
+      <div class="roadmap-tech">Prometheus · Grafana · Log aggregation · Alerts</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-status next">○ Upcoming</div>
+      <div class="roadmap-title">Kubernetes</div>
+      <div class="roadmap-tech">k8s · Helm · Cluster management · Auto-scaling</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-status next">○ Upcoming</div>
+      <div class="roadmap-title">Cloud Infra</div>
+      <div class="roadmap-tech">Terraform · IaC · AWS / GCP · Ansible</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-status next">○ Upcoming</div>
+      <div class="roadmap-title">Security</div>
+      <div class="roadmap-tech">DevSecOps · Secrets management · Vulnerability scanning</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section id="certs">
+  <div class="section-label">// 06 — credentials</div>
+  <h2 class="section-title">Certificates</h2>
+  <div class="section-divider"></div>
+
+  <div class="cert-card">
+    <div class="cert-icon">🐍</div>
+    <div>
+      <div class="cert-title">Python 3 Programming Specialization</div>
+      <div class="cert-org">UNIVERSITY OF MICHIGAN · COURSERA</div>
+      <div class="cert-courses">
+        <span class="cert-course-tag">Python Basics</span>
+        <span class="cert-course-tag">Functions, Files & Dictionaries</span>
+        <span class="cert-course-tag">Data Collection with Python</span>
+        <span class="cert-course-tag">Classes & Inheritance</span>
+        <span class="cert-course-tag">Pillow · Tesseract · OpenCV</span>
+      </div>
+      <a href="https://coursera.org/verify/specialization/3WRVZLDFCFJV" target="_blank" class="cert-verify">
+        Verify Certificate ↗
+      </a>
+    </div>
+    <div class="cert-date">FEB 18, 2024</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">// 07 — get in touch</div>
+  <h2 class="section-title">Contact</h2>
+  <div class="section-divider"></div>
+
+  <div class="contact-grid">
+    <a href="tel:+998944762103" class="contact-card">
+      <div class="contact-card-label">Phone</div>
+      <div class="contact-card-value">+998 94 476 21 03</div>
+      <div class="contact-card-arrow">↗</div>
+    </a>
+    <a href="mailto:abdullatifkrmv@gmail.com" class="contact-card">
+      <div class="contact-card-label">Email</div>
+      <div class="contact-card-value">abdullatifkrmv@gmail.com</div>
+      <div class="contact-card-arrow">↗</div>
+    </a>
+    <a href="https://github.com/KarimovProject" target="_blank" class="contact-card">
+      <div class="contact-card-label">GitHub</div>
+      <div class="contact-card-value">KarimovProject</div>
+      <div class="contact-card-arrow">↗</div>
+    </a>
+    <div class="contact-card" style="cursor:default">
+      <div class="contact-card-label">Location</div>
+      <div class="contact-card-value">Samarkand, Uzbekistan</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>KARIMOV ABDULLATIF</span>
+  <span>Backend Developer · Future DevOps Engineer</span>
+  <span>© 2025 · All rights reserved</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX - 6 + 'px';
+    cursor.style.top = mouseY - 6 + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    cursorRing.style.left = ringX - 18 + 'px';
+    cursorRing.style.top = ringY - 18 + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .skill-tag, .contact-card, .roadmap-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      cursorRing.style.transform = 'scale(1.4)';
+      cursorRing.style.borderColor = 'rgba(0,229,160,0.7)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      cursorRing.style.transform = 'scale(1)';
+      cursorRing.style.borderColor = 'rgba(0,229,160,0.4)';
+    });
+  });
+
+  // Intersection observer for timeline
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.timeline-item').forEach(item => {
+    item.classList.remove('visible');
+    observer.observe(item);
+  });
+
+  // Live server log simulation
+  const log = document.getElementById('serverLog');
+  const logMessages = [
+    ['INFO', 'Health check endpoint /ping returned 200 OK'],
+    ['OK', 'Backup completed — database snapshot saved'],
+    ['DEPLOY', 'Git push received — pipeline triggered'],
+    ['INFO', 'Container resource usage within limits'],
+    ['OK', 'New deployment successful — v2.1.4 live'],
+    ['INFO', 'SSL certificate auto-renewed successfully'],
+    ['OK', 'API rate limiter active — 0 abuses detected'],
+  ];
+  let logIdx = 0;
+
+  setInterval(() => {
+    const now = new Date();
+    const ts = `[${now.toISOString().slice(0,19).replace('T', ' ')}]`;
+    const [type, msg] = logMessages[logIdx % logMessages.length];
+    const cls = type === 'OK' ? 'log-ok' : type === 'INFO' ? 'log-info' : 'log-warn';
+    const div = document.createElement('div');
+    div.innerHTML = `<span class="log-time">${ts}</span> <span class="${cls}">${type}</span> — ${msg}`;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+    logIdx++;
+  }, 3500);
+
+  // Smooth scroll for nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>

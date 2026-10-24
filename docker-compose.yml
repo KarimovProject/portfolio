@@ -1,0 +1,25 @@
+services:
+  portfolio:
+    image: nginx:alpine
+    container_name: abdullatif_portfolio
+    restart: always
+    volumes:
+      - .:/usr/share/nginx/html
+    networks:
+      - default
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared_tunnel
+    restart: always
+    volumes:
+      - /home/satosylv/.cloudflared:/home/nonroot/.cloudflared
+    command: tunnel --no-autoupdate run markaz-tunnel
+    networks:
+      - default
+      - journal_cancercenter_app_net
+
+networks:
+  default:
+  journal_cancercenter_app_net:
+    external: true

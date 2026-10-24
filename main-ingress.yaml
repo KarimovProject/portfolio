@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main-ingress
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  # 1-qoida: Agar abdullatif.uz kelsa -> Portfolio podiga
+  - host: abdullatif.uz
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: portfolio
+            port:
+              number: 80
+  # 2-qoida: Agar edu.abdullatif.uz kelsa -> EduManage podiga
+  - host: edu.abdullatif.uz
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 80
